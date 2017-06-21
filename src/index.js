@@ -10,7 +10,7 @@ import { routerMiddleware, syncHistoryWithStore, routerReducer } from 'react-rou
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
 import App from './container/AppContainer';
-import './index.css';
+import './index.less';
 
 const middleware = [
   routerMiddleware(browserHistory),
