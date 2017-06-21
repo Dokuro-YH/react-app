@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import logo from './logo.svg';
-import './App.css';
+import logo from '../../logo.svg';
 
-class App extends Component {
+export default class App extends Component {
   static propTypes = {
     app: PropTypes.shape({
       msg: PropTypes.string.isRequired,
@@ -25,5 +23,3 @@ class App extends Component {
     );
   }
 }
-
-export default connect(({ app }) => ({ app }))(App);
