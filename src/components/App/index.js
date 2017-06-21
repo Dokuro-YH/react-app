@@ -1,4 +1,4 @@
 import App from './App';
-import './App.css';
+import './App.less';
 
 export default App;
