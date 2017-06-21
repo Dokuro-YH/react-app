@@ -8,6 +8,7 @@
 // To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
 // This link also includes instructions on opting out of this behavior.
 
+/* eslint-disable */
 export default function register() {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -15,7 +16,6 @@ export default function register() {
       navigator.serviceWorker
         .register(swUrl)
         .then((registration) => {
-          /* eslint no-param-reassign: 0 */
           registration.onupdatefound = () => {
             const installingWorker = registration.installing;
             installingWorker.onstatechange = () => {
