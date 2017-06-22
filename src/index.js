@@ -9,7 +9,7 @@ import { routerMiddleware, syncHistoryWithStore, routerReducer } from 'react-rou
 
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
-import RouterConfig from './router-config';
+import RouterConfig from './router';
 import './index.less';
 
 const middleware = [

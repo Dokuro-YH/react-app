@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import App from '../components/App';
+import App from './App';
+import './App.less';
 
 const AppContainer = connect(({ app }) => ({ app }))(App);
 

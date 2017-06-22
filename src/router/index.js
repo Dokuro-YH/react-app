@@ -1,4 +1,4 @@
-import App from './container/AppContainer';
+import App from './App';
 
 const RouterConfig = [
   {
