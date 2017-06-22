@@ -4,12 +4,12 @@ import ReactDOM from 'react-dom';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 import { routerMiddleware, syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
-import App from './container/AppContainer';
+import RouterConfig from './router-config';
 import './index.less';
 
 const middleware = [
@@ -33,9 +33,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
-      <Route path="/" component={App} />
-    </Router>
+    <Router history={history} routes={RouterConfig} />
   </Provider>
   , document.getElementById('root'));
 registerServiceWorker();
