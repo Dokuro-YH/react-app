@@ -16,7 +16,8 @@ class LoginForm extends Component {
       validateFields: PropTypes.func.isRequired,
     }).isRequired,
   }
-  handlerSubmit = () => {
+  handlerSubmit = (event) => {
+    event.preventDefault();
     const { onSubmit } = this.props;
     const { validateFields } = this.props.form;
     validateFields((err, values) => {
@@ -28,7 +29,7 @@ class LoginForm extends Component {
     const { loginPending } = this.props;
     const { getFieldDecorator } = this.props.form;
     return (
-      <div>
+      <div id="login-form">
         <Form
           onSubmit={this.handlerSubmit}
         >
@@ -52,7 +53,7 @@ class LoginForm extends Component {
             )}
           </FormItem>
           <FormItem>
-            <Button loading={loginPending} type="primary" htmlType="submit" className="login-form-button">登录</Button>
+            <Button loading={loginPending} type="primary" htmlType="submit" className="login-btn">登录</Button>
           </FormItem>
         </Form>
       </div>
