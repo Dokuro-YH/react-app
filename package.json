@@ -4,7 +4,7 @@
   "homepage": "https://dokuro-yh.github.io/react-app",
   "private": true,
   "dependencies": {
-    "antd": "^2.11.1",
+    "antd": "^2.12.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
