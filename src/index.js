@@ -10,6 +10,7 @@ import { routerMiddleware, syncHistoryWithStore, routerReducer } from 'react-rou
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
 import RouterConfig from './router';
+import App from './App';
 import './index.less';
 
 const middleware = [
@@ -33,7 +34,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history} routes={RouterConfig} />
+    <App router={<Router history={history} routes={RouterConfig} />} />
   </Provider>
   , document.getElementById('root'));
 registerServiceWorker();

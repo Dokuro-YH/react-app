@@ -1,5 +1,5 @@
 const initialState = {
-  msg: 'Welcome to React',
+  isLoggedIn: true,
 };
 
 export default (state = initialState) => state;

@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import LoginForm from '../../components/login-form';
+import './Login.less';
 
 export default class Login extends Component {
   static propTypes = {
     onLogin: PropTypes.func.isRequired,
-    loginPending: PropTypes.bool.isRequired,
+    isLoginPending: PropTypes.bool.isRequired,
   }
   render() {
-    const { onLogin, loginPending } = this.props;
+    const { onLogin, isLoginPending } = this.props;
 
     const formProps = {
       onSubmit: onLogin,
-      loginPending,
+      loading: isLoginPending,
     };
 
     return (

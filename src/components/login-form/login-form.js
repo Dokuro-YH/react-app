@@ -6,10 +6,10 @@ const FormItem = Form.Item;
 
 class LoginForm extends Component {
   static defaultProps = {
-    loginPending: false,
+    loading: false,
   }
   static propTypes = {
-    loginPending: PropTypes.bool,
+    loading: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
     form: PropTypes.shape({
       getFieldDecorator: PropTypes.func.isRequired,
@@ -26,7 +26,7 @@ class LoginForm extends Component {
     });
   }
   render() {
-    const { loginPending } = this.props;
+    const { loading } = this.props;
     const { getFieldDecorator } = this.props.form;
     return (
       <div id="login-form">
@@ -53,7 +53,7 @@ class LoginForm extends Component {
             )}
           </FormItem>
           <FormItem>
-            <Button loading={loginPending} type="primary" htmlType="submit" className="login-btn">登录</Button>
+            <Button loading={loading} type="primary" htmlType="submit" className="login-btn">登录</Button>
           </FormItem>
         </Form>
       </div>
