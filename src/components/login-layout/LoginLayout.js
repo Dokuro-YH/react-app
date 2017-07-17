@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import LoginForm from '../../components/login-form';
-import './Login.less';
+import './LoginLayout.less';
 
 export default class Login extends Component {
   static propTypes = {
