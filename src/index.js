@@ -10,7 +10,6 @@ import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-r
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
 import App from './containers/App';
-import './index.less';
 
 const history = createHistory();
 

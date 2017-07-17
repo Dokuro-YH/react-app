@@ -5,15 +5,13 @@ import './LoginLayout.less';
 
 export default class Login extends Component {
   static propTypes = {
-    onLogin: PropTypes.func.isRequired,
-    isLoginPending: PropTypes.bool.isRequired,
+    login: PropTypes.func.isRequired,
   }
   render() {
-    const { onLogin, isLoginPending } = this.props;
+    const { login } = this.props;
 
     const formProps = {
-      onSubmit: onLogin,
-      loading: isLoginPending,
+      onSubmit: login,
     };
 
     return (
