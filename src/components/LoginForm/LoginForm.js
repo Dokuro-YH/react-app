@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Button, Icon } from 'antd';
+import './style';
 
 const FormItem = Form.Item;
 

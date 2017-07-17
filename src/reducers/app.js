@@ -1,6 +1,9 @@
 import * as types from '../constants/app';
+import { menus, treeMenu } from '../utils/menu';
 
 const initialState = {
+  menus,
+  treeMenu,
   isLoggedIn: true,
   collapsed: false,
   user: { username: 'admin' },

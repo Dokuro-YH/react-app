@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb, Avatar, Dropdown, Icon } from 'antd';
 import './style';
 
-export default class MainLayout extends Component {
+class MainLayout extends Component {
   static propTypes = {
     user: PropTypes.shape({
       username: PropTypes.string.isRequired,
       avatar: PropTypes.string,
     }).isRequired,
+    treeMenu: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.any.isRequired,
+      title: PropTypes.string.isRequired,
+      icon: PropTypes.string,
+      link: PropTypes.string,
+    }).isRequired).isRequired,
     collapsed: PropTypes.bool.isRequired,
     selectedKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
     openedKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -16,6 +23,7 @@ export default class MainLayout extends Component {
     toggleSidenav: PropTypes.func.isRequired,
     updateSelectedKeys: PropTypes.func.isRequired,
     updateOpenedKeys: PropTypes.func.isRequired,
+    children: PropTypes.element.isRequired,
   }
 
   handlerSelect = ({ selectedKeys }) => this.props.updateSelectedKeys(selectedKeys)
@@ -26,45 +34,44 @@ export default class MainLayout extends Component {
     }
   }
 
-  renderSideMenu = () => (
-    <Menu
-      className="main-menu"
-      theme="dark"
-      mode="inline"
-      defaultSelectedKeys={this.props.selectedKeys}
-      defaultOpenKeys={this.props.openedKeys}
-      onSelect={this.handlerSelect}
-      onOpenChange={this.props.updateOpenedKeys}
-    >
-      <Menu.Item key="1">
-        <Icon type="pie-chart" />
-        <span>Option 1</span>
+  createMenuItem = (menu) => {
+    if (menu.children && Array.isArray(menu.children)) {
+      const items = menu.children.map(this.createMenuItem);
+      return (
+        <Menu.SubMenu
+          key={menu.id}
+          title={<span><Icon type={menu.icon} /><span>{menu.title}</span></span>}
+        >
+          {items}
+        </Menu.SubMenu>
+      );
+    }
+    return (
+      <Menu.Item key={menu.id} >
+        {menu.link ?
+          <Link to={menu.link}><Icon type={menu.icon} />{menu.title}</Link> :
+          <span><Icon type={menu.icon} />{menu.title}</span>
+        }
       </Menu.Item>
-      <Menu.Item key="2">
-        <Icon type="desktop" />
-        <span>Option 2</span>
-      </Menu.Item>
-      <Menu.SubMenu
-        key="sub1"
-        title={<span><Icon type="user" /><span>User</span></span>}
+    );
+  }
+
+  renderSideMenu = () => {
+    const items = this.props.treeMenu.map(this.createMenuItem);
+    return (
+      <Menu
+        className="main-menu"
+        theme="dark"
+        mode="inline"
+        defaultSelectedKeys={this.props.selectedKeys}
+        defaultOpenKeys={this.props.openedKeys}
+        onSelect={this.handlerSelect}
+        onOpenChange={this.props.updateOpenedKeys}
       >
-        <Menu.Item key="3">Tom</Menu.Item>
-        <Menu.Item key="4">Bill</Menu.Item>
-        <Menu.Item key="5">Alex</Menu.Item>
-      </Menu.SubMenu>
-      <Menu.SubMenu
-        key="sub2"
-        title={<span><Icon type="team" /><span>Team</span></span>}
-      >
-        <Menu.Item key="6">Team 1</Menu.Item>
-        <Menu.Item key="8">Team 2</Menu.Item>
-      </Menu.SubMenu>
-      <Menu.Item key="8">
-        <Icon type="file" />
-        <span>File</span>
-      </Menu.Item>
-    </Menu>
-  );
+        {items}
+      </Menu>
+    );
+  };
 
   renderHanderMenu = () => (
     <Menu onClick={this.handerMenuClick}>
@@ -108,10 +115,14 @@ export default class MainLayout extends Component {
           </Layout.Header>
           <Layout.Content className="main-content">
             {breadcrumb}
-            <div className="main-content-wrapper" />
+            <div className="main-content-wrapper">
+              {this.props.children}
+            </div>
           </Layout.Content>
         </Layout>
       </Layout>
     );
   }
 }
+
+export default MainLayout;

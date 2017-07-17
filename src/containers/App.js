@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Switch, Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import MainLayout from '../components/main-layout';
-import LoginLayout from '../components/login-layout';
+import MainLayout from '../components/MainLayout';
+import LoginLayout from '../components/LoginLayout';
 import * as AppActions from '../actions/app';
+
+import Dashboard from './Dashboard';
+import Users from './Users';
+import Teams from './Teams';
 
 class App extends Component {
   static defaultProps = {
@@ -14,6 +18,11 @@ class App extends Component {
   }
   static propTypes = {
     state: PropTypes.shape({
+      treeMenu: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.any.isRequired,
+        title: PropTypes.string.isRequired,
+        icon: PropTypes.string,
+      }).isRequired).isRequired,
       user: PropTypes.shape({
         username: PropTypes.string.isRequired,
       }),
@@ -34,6 +43,7 @@ class App extends Component {
     const { state, actions } = this.props;
 
     const mainLayoutProps = {
+      treeMenu: state.treeMenu,
       user: state.user,
       collapsed: state.collapsed,
       selectedKeys: state.selectedKeys,
@@ -56,7 +66,13 @@ class App extends Component {
           transitionLeaveTimeout={300}
         >
           {state.isLoggedIn ?
-            <MainLayout key="main" {...mainLayoutProps} /> :
+            <MainLayout key="main" {...mainLayoutProps} >
+              <Switch>
+                <Route exact path="/" component={Dashboard} />
+                <Route path="/users" component={Users} />
+                <Route path="/teams" component={Teams} />
+              </Switch>
+            </MainLayout> :
             <LoginLayout key="login" {...loginLayoutProps} />}
         </ReactCSSTransitionGroup>
       </div>
