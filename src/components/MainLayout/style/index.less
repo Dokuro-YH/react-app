@@ -1,5 +1,6 @@
 .main {
   &-layout {
+    position: relative;
     height: 100%;
   }
 
@@ -27,14 +28,15 @@
     }
   }
 
-  &-content {
+  &-container {
     margin: 0 16px;
+  }
 
-    &-wrapper {
-      padding: 24px;
-      background: #fff;
-      min-height: 360px;
-    }
+  &-content-wrapper {
+    position: relative;
+    padding: 24px;
+    background: #fff;
+    min-height: 360px;
   }
 
   &-breadcrumb {

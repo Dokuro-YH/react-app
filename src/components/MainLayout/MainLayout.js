@@ -113,7 +113,7 @@ class MainLayout extends Component {
               <Avatar className="main-header-avatar" src={user.avatar}>{user.username}</Avatar>
             </Dropdown>
           </Layout.Header>
-          <Layout.Content className="main-content">
+          <Layout.Content className="main-container">
             {breadcrumb}
             <div className="main-content-wrapper">
               {this.props.children}

@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { withRouter, Switch, Route } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import Animate from 'rc-animate';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
 import MainLayout from '../components/MainLayout';
 import LoginLayout from '../components/LoginLayout';
 import * as AppActions from '../actions/app';
 
-import Dashboard from './Dashboard';
-import Users from './Users';
-import Teams from './Teams';
-
 class App extends Component {
   static defaultProps = {
     user: {},
+    children: null,
   }
   static propTypes = {
+    children: PropTypes.element,
     state: PropTypes.shape({
       treeMenu: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.any.isRequired,
@@ -39,7 +37,8 @@ class App extends Component {
       updateOpenedKeys: PropTypes.func.isRequired,
     }).isRequired,
   }
-  render() {
+
+  renderMain = () => {
     const { state, actions } = this.props;
 
     const mainLayoutProps = {
@@ -54,27 +53,36 @@ class App extends Component {
       updateOpenedKeys: actions.updateOpenedKeys,
     };
 
+    return (
+      <MainLayout key="main" {...mainLayoutProps} >
+        {this.props.children}
+      </MainLayout>
+    );
+  }
+
+  renderLogin = () => {
+    const { actions } = this.props;
+
     const loginLayoutProps = {
       login: actions.login,
     };
 
     return (
+      <LoginLayout key="login" {...loginLayoutProps} />
+    );
+  }
+
+  render() {
+    const { state } = this.props;
+
+    return (
       <div id="app">
-        <ReactCSSTransitionGroup
-          transitionName="slide-y-transition"
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}
+        <Animate
+          component=""
+          transitionName="fade"
         >
-          {state.isLoggedIn ?
-            <MainLayout key="main" {...mainLayoutProps} >
-              <Switch>
-                <Route exact path="/" component={Dashboard} />
-                <Route path="/users" component={Users} />
-                <Route path="/teams" component={Teams} />
-              </Switch>
-            </MainLayout> :
-            <LoginLayout key="login" {...loginLayoutProps} />}
-        </ReactCSSTransitionGroup>
+          {state.isLoggedIn ? this.renderMain() : this.renderLogin()}
+        </Animate>
       </div>
     );
   }

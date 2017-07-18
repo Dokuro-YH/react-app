@@ -5200,6 +5200,14 @@ rc-animate@2.x, rc-animate@^2.0.2, rc-animate@^2.3.0, rc-animate@^2.3.6:
     css-animation "^1.3.0"
     prop-types "^15.5.6"
 
+rc-animate@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/rc-animate/-/rc-animate-2.4.0.tgz#a51b47dadf8ad9af08cddfb5b0217bfa81aee803"
+  dependencies:
+    babel-runtime "6.x"
+    css-animation "1.x"
+    prop-types "15.x"
+
 rc-calendar@~8.4.1:
   version "8.4.5"
   resolved "https://registry.yarnpkg.com/rc-calendar/-/rc-calendar-8.4.5.tgz#8993b56070538c409284dcb271d566a018858a64"
@@ -5504,12 +5512,6 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-addons-css-transition-group@^15.6.0:
-  version "15.6.0"
-  resolved "https://registry.yarnpkg.com/react-addons-css-transition-group/-/react-addons-css-transition-group-15.6.0.tgz#69887cf6e4874d25cd66e22a699e29f0d648aba0"
-  dependencies:
-    react-transition-group "^1.2.0"
-
 react-dev-utils@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-3.0.0.tgz#3677f37718ba0cae892ba9c01fe54d1622e6ef7c"
@@ -5621,14 +5623,15 @@ react-test-renderer@^15.6.1:
     fbjs "^0.8.9"
     object-assign "^4.1.0"
 
-react-transition-group@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-1.2.0.tgz#b51fc921b0c3835a7ef7c571c79fc82c73e9204f"
+react-transition-group@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.1.0.tgz#3a4d115e1b515da3dd0280597b3b00cbbbee996b"
   dependencies:
     chain-function "^1.0.0"
+    classnames "^2.2.5"
     dom-helpers "^3.2.0"
     loose-envify "^1.3.1"
-    prop-types "^15.5.6"
+    prop-types "^15.5.8"
     warning "^3.0.0"
 
 react@^15.6.1:
