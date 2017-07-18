@@ -63,8 +63,8 @@ class MainLayout extends Component {
         className="main-menu"
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={this.props.selectedKeys}
-        defaultOpenKeys={this.props.openedKeys}
+        selectedKeys={this.props.selectedKeys}
+        openKeys={this.props.openedKeys}
         onSelect={this.handlerSelect}
         onOpenChange={this.props.updateOpenedKeys}
       >
