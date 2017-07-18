@@ -16,7 +16,9 @@
     "react-router-redux": "next",
     "react-transition-group": "^2.1.0",
     "redux": "^3.7.0",
-    "redux-actions": "^2.2.1"
+    "redux-actions": "^2.2.1",
+    "redux-observable": "^0.14.1",
+    "rxjs": "^5.4.2"
   },
   "devDependencies": {
     "autoprefixer": "7.1.0",

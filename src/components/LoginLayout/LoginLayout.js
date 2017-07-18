@@ -5,12 +5,14 @@ import './style';
 
 export default class Login extends Component {
   static propTypes = {
+    isLoginPending: PropTypes.bool.isRequired,
     login: PropTypes.func.isRequired,
   }
   render() {
-    const { login } = this.props;
+    const { isLoginPending, login } = this.props;
 
     const formProps = {
+      loading: isLoginPending,
       onSubmit: login,
     };
 

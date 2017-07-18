@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import MainLayout from '../components/MainLayout';
 import LoginLayout from '../components/LoginLayout';
-import AppActions from '../actions/app';
+import { appActions } from '../redux/modules/app';
 
 class App extends Component {
   static defaultProps = {
@@ -28,6 +28,7 @@ class App extends Component {
       selectedKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
       openedKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
       isLoggedIn: PropTypes.bool.isRequired,
+      isLoginPending: PropTypes.bool.isRequired,
     }).isRequired,
     actions: PropTypes.shape({
       login: PropTypes.func.isRequired,
@@ -61,9 +62,10 @@ class App extends Component {
   }
 
   renderLogin = () => {
-    const { actions } = this.props;
+    const { state, actions } = this.props;
 
     const loginLayoutProps = {
+      isLoginPending: state.isLoginPending,
       login: actions.login,
     };
 
@@ -93,7 +95,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(AppActions, dispatch),
+  actions: bindActionCreators(appActions, dispatch),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
