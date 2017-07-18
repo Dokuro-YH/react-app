@@ -1,4 +1,4 @@
-import * as types from '../constants/app';
+import { handleActions } from 'redux-actions';
 import { menus, treeMenu } from '../utils/menu';
 
 const initialState = {
@@ -11,28 +11,15 @@ const initialState = {
   openedKeys: [],
 };
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case types.LOGIN:
-      return { ...state, user: action.user, isLoggedIn: true };
-    case types.LOGOUT:
-      return { ...state, user: null, isLoggedIn: false };
-    case types.TOGGLE_SIDENAV:
-      return {
-        ...state,
-        collapsed: action.collapsed,
-      };
-    case types.UPDATE_SELECTED_KEYS:
-      return {
-        ...state,
-        selectedKeys: action.selectedKeys,
-      };
-    case types.UPDATE_OPENED_KEYS:
-      return {
-        ...state,
-        openedKeys: action.openedKeys,
-      };
-    default:
-      return state;
-  }
-};
+export default handleActions({
+  LOGIN: (state, { payload }) =>
+    ({ ...state, ...payload, isLoggedIn: true }),
+  LOGOUT: (state, { payload }) =>
+    ({ ...state, ...payload, isLoggedIn: false }),
+  TOGGLE_SIDENAV: (state, { payload }) =>
+    ({ ...state, ...payload }),
+  UPDATE_SELECTED_KEYS: (state, { payload }) =>
+    ({ ...state, ...payload }),
+  UPDATE_OPENED_KEYS: (state, { payload }) =>
+    ({ ...state, ...payload }),
+}, initialState);

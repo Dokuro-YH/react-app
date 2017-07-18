@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import MainLayout from '../components/MainLayout';
 import LoginLayout from '../components/LoginLayout';
-import * as AppActions from '../actions/app';
+import AppActions from '../actions/app';
 
 class App extends Component {
   static defaultProps = {
