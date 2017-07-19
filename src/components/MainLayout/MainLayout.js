@@ -42,8 +42,8 @@ class MainLayout extends Component {
     return (
       <Menu.Item key={menu.id} >
         {menu.link ?
-          <Link to={menu.link}><Icon type={menu.icon} />{menu.title}</Link> :
-          <span><Icon type={menu.icon} />{menu.title}</span>
+          <Link to={menu.link}><Icon type={menu.icon} /><span>{menu.title}</span></Link> :
+          <span><Icon type={menu.icon} /><span>{menu.title}</span></span>
         }
       </Menu.Item>
     );
