@@ -39,11 +39,13 @@ class MainLayout extends Component {
         </Menu.SubMenu>
       );
     }
+
+    const menuIcon = (menu.icon && <Icon type={menu.icon} />);
     return (
       <Menu.Item key={menu.id} >
         {menu.link ?
-          <Link to={menu.link}><Icon type={menu.icon} /><span>{menu.title}</span></Link> :
-          <span><Icon type={menu.icon} /><span>{menu.title}</span></span>
+          <Link to={menu.link}>{menuIcon}<span>{menu.title}</span></Link> :
+          <span>{menuIcon}<span>{menu.title}</span></span>
         }
       </Menu.Item>
     );
