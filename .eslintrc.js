@@ -6,6 +6,7 @@ module.exports = {
   },
   env: {
     browser: true,
+    jest: true
   },
   extends: 'airbnb',
   plugins: [
@@ -14,9 +15,11 @@ module.exports = {
     'import'
   ],
   rules: {
+    'import/prefer-default-export': [0],
     'react/jsx-filename-extension': [1, {
       'extensions': ['.js', '.jsx']
     }],
-    'react/prefer-stateless-function': [1]
+    'react/prefer-stateless-function': [0],
+    'react/forbid-prop-types': [0]
   }
 };
