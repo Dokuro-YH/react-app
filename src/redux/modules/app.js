@@ -40,9 +40,9 @@ const initialState = {
   treeMenus,
   currentMenu: null,
   isLoginPending: false,
-  isLoggedIn: true,
+  isLoggedIn: false,
+  user: null,
   collapsed: getStorageSidenavCollapsed(),
-  user: { username: 'admin' },
   openedKeys: [],
   screenWidth: 0,
 };
