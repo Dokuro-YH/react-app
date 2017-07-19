@@ -6,6 +6,8 @@ import pathToRegexp from 'path-to-regexp';
 import metaMenus from '../../utils/menus';
 import { arrayToTree } from '../../utils/array';
 
+const STORAGE_SIDENAV_COLLAPSED_KEY = 'APP/SIDENAV_COLLAPSED';
+
 const menus = metaMenus.map(m => ({
   ...m,
   regexp: m.link && pathToRegexp(m.link),
@@ -18,13 +20,28 @@ function selectCurrentMenu(regexpMenus, pathname) {
   return currentMenu;
 }
 
+function storageSidenavCollapsed(collapsed) {
+  localStorage.setItem(STORAGE_SIDENAV_COLLAPSED_KEY, JSON.stringify(collapsed));
+  return collapsed;
+}
+
+function getStorageSidenavCollapsed() {
+  const sidenavCollapsed = localStorage.getItem(STORAGE_SIDENAV_COLLAPSED_KEY);
+
+  if (!sidenavCollapsed) {
+    return false;
+  }
+
+  return JSON.parse(sidenavCollapsed);
+}
+
 const initialState = {
   menus,
   treeMenus,
   currentMenu: null,
   isLoginPending: false,
   isLoggedIn: true,
-  collapsed: false,
+  collapsed: getStorageSidenavCollapsed(),
   user: { username: 'admin' },
   openedKeys: [],
   screenWidth: 0,
@@ -65,7 +82,7 @@ export default handleActions({
   LOGOUT: state =>
     ({ ...state, user: null, isLoggedIn: false }),
   TOGGLE_SIDENAV: (state, { payload }) =>
-    ({ ...state, collapsed: payload }),
+    ({ ...state, collapsed: storageSidenavCollapsed(payload) }),
   UPDATE_OPENED_KEYS: (state, { payload }) =>
     ({ ...state, openedKeys: payload }),
   UPDATE_SCREEN_WIDTH: (state, { payload }) =>
