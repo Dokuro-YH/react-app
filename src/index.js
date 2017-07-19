@@ -2,7 +2,8 @@ import React from 'react';
 import { Spin } from 'antd';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createBrowserHistory as createHistory } from 'history';
+// import { createBrowserHistory as createHistory } from 'history';
+import { createHashHistory as createHistory } from 'history'; // use in gh-pages
 import { Switch, Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
