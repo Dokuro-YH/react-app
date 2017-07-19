@@ -15,42 +15,22 @@ class App extends Component {
   }
   static propTypes = {
     children: PropTypes.element,
-    state: PropTypes.shape({
-      treeMenu: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.any.isRequired,
-        title: PropTypes.string.isRequired,
-        icon: PropTypes.string,
-      }).isRequired).isRequired,
-      user: PropTypes.shape({
-        username: PropTypes.string.isRequired,
-      }),
-      collapsed: PropTypes.bool.isRequired,
-      selectedKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
-      openedKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
-      isLoggedIn: PropTypes.bool.isRequired,
-      isLoginPending: PropTypes.bool.isRequired,
-    }).isRequired,
-    actions: PropTypes.shape({
-      login: PropTypes.func.isRequired,
-      logout: PropTypes.func.isRequired,
-      toggleSidenav: PropTypes.func.isRequired,
-      updateSelectedKeys: PropTypes.func.isRequired,
-      updateOpenedKeys: PropTypes.func.isRequired,
-    }).isRequired,
+    state: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
   }
 
   renderMain = () => {
     const { state, actions } = this.props;
 
     const mainLayoutProps = {
-      treeMenu: state.treeMenu,
+      menus: state.menus,
+      currentMenu: state.currentMenu,
+      treeMenus: state.treeMenus,
       user: state.user,
       collapsed: state.collapsed,
-      selectedKeys: state.selectedKeys,
       openedKeys: state.openedKeys,
       logout: actions.logout,
       toggleSidenav: actions.toggleSidenav,
-      updateSelectedKeys: actions.updateSelectedKeys,
       updateOpenedKeys: actions.updateOpenedKeys,
     };
 

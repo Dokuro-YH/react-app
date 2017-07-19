@@ -1,28 +1,42 @@
 import { createActions, handleActions } from 'redux-actions';
+import { LOCATION_CHANGE } from 'react-router-redux';
 import { combineEpics } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
-import { menus, treeMenu } from '../../utils/menu';
+import pathToRegexp from 'path-to-regexp';
+import metaMenus from '../../utils/menus';
+import { arrayToTree } from '../../utils/array';
+
+const menus = metaMenus.map(m => ({
+  ...m,
+  regexp: m.link && pathToRegexp(m.link),
+}));
+
+const treeMenus = arrayToTree(menus);
+
+function selectCurrentMenu(regexpMenus, pathname) {
+  const currentMenu = regexpMenus.find(m => m.regexp && m.regexp.exec(pathname));
+  return currentMenu;
+}
 
 const initialState = {
   menus,
-  treeMenu,
+  treeMenus,
+  currentMenu: null,
   isLoginPending: false,
-  isLoggedIn: false,
+  isLoggedIn: true,
   collapsed: false,
-  user: null,
-  selectedKeys: [],
+  user: { username: 'admin' },
   openedKeys: [],
   screenWidth: 0,
 };
 
 export const appActions = createActions({
   LOGIN: user => user,
-  LOGIN_SUCCESS: user => ({ user }),
-  LOGOUT: () => ({ user: null }),
-  TOGGLE_SIDENAV: collapsed => ({ collapsed }),
-  UPDATE_SELECTED_KEYS: selectedKeys => ({ selectedKeys }),
-  UPDATE_OPENED_KEYS: openedKeys => ({ openedKeys }),
-  UPDATE_SCREEN_WIDTH: screenWidth => ({ screenWidth }),
+  LOGIN_SUCCESS: user => user,
+  LOGOUT: payload => payload,
+  TOGGLE_SIDENAV: collapsed => collapsed,
+  UPDATE_OPENED_KEYS: openedKeys => openedKeys,
+  UPDATE_SCREEN_WIDTH: screenWidth => screenWidth,
 });
 
 const LoginAPI = user =>
@@ -47,15 +61,17 @@ export default handleActions({
   LOGIN: state =>
     ({ ...state, isLoginPending: true }),
   LOGIN_SUCCESS: (state, { payload }) =>
-    ({ ...state, ...payload, isLoggedIn: true, isLoginPending: false }),
-  LOGOUT: (state, { payload }) =>
-    ({ ...state, ...payload, isLoggedIn: false }),
+    ({ ...state, user: payload, isLoggedIn: true, isLoginPending: false }),
+  LOGOUT: state =>
+    ({ ...state, user: null, isLoggedIn: false }),
   TOGGLE_SIDENAV: (state, { payload }) =>
-    ({ ...state, ...payload }),
-  UPDATE_SELECTED_KEYS: (state, { payload }) =>
-    ({ ...state, ...payload }),
+    ({ ...state, collapsed: payload }),
   UPDATE_OPENED_KEYS: (state, { payload }) =>
-    ({ ...state, ...payload }),
+    ({ ...state, openedKeys: payload }),
   UPDATE_SCREEN_WIDTH: (state, { payload }) =>
-    ({ ...state, ...payload }),
+    ({ ...state, screenWidth: payload }),
+  [LOCATION_CHANGE]: (state, { payload }) => {
+    const currentMenu = selectCurrentMenu(state.menus, payload.pathname);
+    return ({ ...state, currentMenu });
+  },
 }, initialState);

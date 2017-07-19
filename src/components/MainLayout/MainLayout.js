@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb, Avatar, Dropdown, Icon } from 'antd';
+import { Layout, Menu, Breadcrumb, Avatar, Badge, Dropdown, Icon } from 'antd';
 import './style';
 
 class MainLayout extends Component {
@@ -10,23 +10,16 @@ class MainLayout extends Component {
       username: PropTypes.string.isRequired,
       avatar: PropTypes.string,
     }).isRequired,
-    treeMenu: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.any.isRequired,
-      title: PropTypes.string.isRequired,
-      icon: PropTypes.string,
-      link: PropTypes.string,
-    }).isRequired).isRequired,
+    currentMenu: PropTypes.object.isRequired,
+    menus: PropTypes.array.isRequired,
+    treeMenus: PropTypes.array.isRequired,
     collapsed: PropTypes.bool.isRequired,
-    selectedKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
     openedKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
     logout: PropTypes.func.isRequired,
     toggleSidenav: PropTypes.func.isRequired,
-    updateSelectedKeys: PropTypes.func.isRequired,
     updateOpenedKeys: PropTypes.func.isRequired,
     children: PropTypes.element.isRequired,
   }
-
-  handlerSelect = ({ selectedKeys }) => this.props.updateSelectedKeys(selectedKeys)
 
   handerMenuClick = ({ key }) => {
     if (key === 'logout') {
@@ -56,17 +49,38 @@ class MainLayout extends Component {
     );
   }
 
+  createBreadItems = menus => menus.map((m, i) => {
+    const isLast = i === (menus.length - 1);
+
+    let content;
+    if (isLast || !m.link) {
+      content = (<span>{m.title}</span>);
+    } else {
+      content = (<Link to={m.link}>{m.title}</Link>);
+    }
+
+    return (
+      <Breadcrumb.Item key={m.id}>
+        <Icon type={m.icon} />
+        {content}
+      </Breadcrumb.Item>
+    );
+  })
+
   renderSideMenu = () => {
-    const items = this.props.treeMenu.map(this.createMenuItem);
+    const items = this.props.treeMenus.map(this.createMenuItem);
+    const currentMenu = this.props.currentMenu;
+    const selectedKeys = [currentMenu.id && String(currentMenu.id)];
+
     return (
       <Menu
         className="main-menu"
         theme="dark"
         mode="inline"
-        selectedKeys={this.props.selectedKeys}
+        selectedKeys={selectedKeys}
         openKeys={this.props.openedKeys}
-        onSelect={this.handlerSelect}
         onOpenChange={this.props.updateOpenedKeys}
+        inlineCollapsed={this.props.collapsed}
       >
         {items}
       </Menu>
@@ -74,25 +88,60 @@ class MainLayout extends Component {
   };
 
   renderHanderMenu = () => (
-    <Menu onClick={this.handerMenuClick}>
+    <Menu onClick={this.handerMenuClick} selectedKeys={[]}>
       <Menu.Item key="profile">我的</Menu.Item>
+      <Menu.Item key="message">消息</Menu.Item>
       <Menu.Divider />
       <Menu.Item key="logout">退出登录</Menu.Item>
     </Menu>
   )
 
-  renderBreadcrumb = () => (
-    <Breadcrumb className="main-breadcrumb">
-      <Breadcrumb.Item>Home</Breadcrumb.Item>
-      <Breadcrumb.Item>List</Breadcrumb.Item>
-      <Breadcrumb.Item>App</Breadcrumb.Item>
-    </Breadcrumb>
-  )
+  renderHeader = () => {
+    const user = this.props.user;
+    const headerMenu = this.renderHanderMenu();
+
+    return (
+      <Layout.Header className="main-header">
+        <span className="fill" />
+        <Dropdown overlay={headerMenu}>
+          <Badge dot>
+            <Avatar className="main-header-avatar" src={user.avatar}>{user.username}</Avatar>
+          </Badge>
+        </Dropdown>
+      </Layout.Header>
+    );
+  };
+
+  renderBreadcrumb = () => {
+    const { currentMenu, menus } = this.props;
+    const mapMenus = menus.reduce((map, menu) => ({ ...map, [menu.id]: menu }), {});
+    let parentMenu = currentMenu;
+
+    const breads = [];
+
+    if (parentMenu) {
+      breads.push(parentMenu);
+
+      if (parentMenu.bpid) {
+        while (mapMenus[parentMenu.bpid]) {
+          parentMenu = mapMenus[parentMenu.bpid];
+          breads.push(parentMenu);
+        }
+      }
+    }
+
+    const items = this.createBreadItems(breads.reverse());
+
+    return (
+      <Breadcrumb className="main-breadcrumb">
+        {items}
+      </Breadcrumb>
+    );
+  }
 
   render() {
-    const user = this.props.user;
     const sideMenu = this.renderSideMenu();
-    const headerMenu = this.renderHanderMenu();
+    const header = this.renderHeader();
     const breadcrumb = this.renderBreadcrumb();
 
     return (
@@ -107,12 +156,7 @@ class MainLayout extends Component {
           {sideMenu}
         </Layout.Sider>
         <Layout>
-          <Layout.Header className="main-header">
-            <span className="fill" />
-            <Dropdown overlay={headerMenu}>
-              <Avatar className="main-header-avatar" src={user.avatar}>{user.username}</Avatar>
-            </Dropdown>
-          </Layout.Header>
+          {header}
           <Layout.Content className="main-container">
             {breadcrumb}
             <div className="main-content-wrapper">

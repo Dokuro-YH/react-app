@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { routerReducer as router } from 'react-router-redux';
 import { combineEpics } from 'redux-observable';
 import app, { appEpic, appListen } from './app';
 
@@ -8,6 +9,7 @@ function combineListens(...listens) {
 
 const rootReducer = combineReducers({
   app,
+  router,
 });
 
 export const rootEpic = combineEpics(

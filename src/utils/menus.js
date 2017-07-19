@@ -1,5 +1,3 @@
-import { arrayToTree } from './array';
-
 const menus = [{
   id: 1,
   title: 'Dashboard',
@@ -13,23 +11,20 @@ const menus = [{
   link: '/users',
 }, {
   id: 3,
-  bpid: 1,
   title: 'Team',
   icon: 'team',
 }, {
   id: 4,
   pid: 3,
-  bpid: 3,
+  bpid: 1,
   title: 'Team 1',
   link: '/teams/1',
 }, {
   id: 5,
   pid: 3,
-  bpid: 3,
+  bpid: 1,
   title: 'Team 2',
   link: '/teams/2',
 }];
 
-const treeMenu = arrayToTree(menus);
-
-export { menus, treeMenu };
+export default menus;
