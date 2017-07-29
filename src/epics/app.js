@@ -4,9 +4,9 @@ import { appActions } from '../actions/app';
 
 const loginEpic = (action$, store, { WebAPI }) =>
   action$.ofType('LOGIN')
-    .mergeMap(({ payload }) =>
+    .concatMap(({ payload }) =>
       WebAPI.login(payload)
-        .map(response => appActions.loginSuccess(response.data))
+        .map(user => appActions.loginSuccess(user))
         .catch(error => Observable.of(appActions.loginError(), appActions.showError(error))),
   );
 

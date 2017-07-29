@@ -107,7 +107,7 @@ class MainLayout extends Component {
         <span className="fill" />
         <Dropdown overlay={headerMenu}>
           <Badge dot>
-            <Avatar className="main-header-avatar" src={user.avatar}>{user.username}</Avatar>
+            <Avatar className="main-header-avatar" src={user.avatar}>{user.name || user.username}</Avatar>
           </Badge>
         </Dropdown>
       </Layout.Header>
