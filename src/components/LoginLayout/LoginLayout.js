@@ -1,28 +1,68 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import LoginForm from '../../components/LoginForm';
+import { Form, Input, Button, Icon } from 'antd';
 import './style';
 
-export default class Login extends Component {
+class Login extends Component {
+  static defaultProps = {
+    loginErrmsg: null,
+  }
   static propTypes = {
     isLoginPending: PropTypes.bool.isRequired,
     login: PropTypes.func.isRequired,
+    // loginErrmsg: PropTypes.string,
+    form: PropTypes.object.isRequired,
   }
-  render() {
-    const { isLoginPending, login } = this.props;
 
-    const formProps = {
-      loading: isLoginPending,
-      onSubmit: login,
-    };
+  handlerSubmit = (event) => {
+    event.preventDefault();
+    const { login } = this.props;
+    const { validateFields } = this.props.form;
+    validateFields((err, values) => {
+      if (err) return;
+      login(values);
+    });
+  }
+
+  render() {
+    const { isLoginPending } = this.props;
+    const { getFieldDecorator } = this.props.form;
 
     return (
       <div id="login-container">
-        <div className="login-header" />
-        <div className="login-form">
-          <LoginForm {...formProps} />
+        <div className="login-wrap">
+          <div className="login-header">
+            <img src="https://t.alipayobjects.com/images/rmsweb/T1B9hfXcdvXXXXXXXX.svg" alt="LOGO" />
+          </div>
+
+          <Form className="login-form" onSubmit={this.handlerSubmit} >
+            <Form.Item>
+              {getFieldDecorator('username', {
+                initialValue: '',
+                rules: [{
+                  required: true, message: '请输入用户名',
+                }],
+              })(
+                <Input prefix={<Icon type="user" />} type="text" placeholder="请输入用户名/邮箱/手机号" />,
+              )}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('password', {
+                rules: [{
+                  required: true, message: '请输入密码',
+                }],
+              })(
+                <Input prefix={<Icon type="user" />} type="password" placeholder="请输入密码" />,
+              )}
+            </Form.Item>
+            <Form.Item>
+              <Button loading={isLoginPending} type="primary" htmlType="submit" className="login-btn">登录</Button>
+            </Form.Item>
+          </Form>
         </div>
       </div>
     );
   }
 }
+
+export default Form.create()(Login);

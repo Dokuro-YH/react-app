@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { message } from 'antd';
 import MainLayout from '../components/MainLayout';
 import LoginLayout from '../components/LoginLayout';
-import { appActions } from '../redux/modules/app';
+import { appActions } from '../actions/app';
 
 class App extends Component {
   static defaultProps = {
@@ -17,6 +18,16 @@ class App extends Component {
     children: PropTypes.element,
     state: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+  }
+
+  componentDidUpdate(prevProps) {
+    const { errmsg } = this.props.state;
+    const { hideError } = this.props.actions;
+    const prevErrmsg = prevProps.state.errmsg;
+
+    if (errmsg && prevErrmsg !== errmsg) {
+      message.error(errmsg, 3, hideError);
+    }
   }
 
   renderMain = () => {
@@ -46,6 +57,7 @@ class App extends Component {
 
     const loginLayoutProps = {
       isLoginPending: state.isLoginPending,
+      loginErrmsg: state.loginErrmsg,
       login: actions.login,
     };
 

@@ -1,10 +1,8 @@
-import { createActions, handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import { LOCATION_CHANGE } from 'react-router-redux';
-import { combineEpics } from 'redux-observable';
-import { Observable } from 'rxjs/Observable';
 import pathToRegexp from 'path-to-regexp';
-import metaMenus from '../../utils/menus';
-import { arrayToTree } from '../../utils/array';
+import metaMenus from '../utils/menus';
+import { arrayToTree } from '../utils/array';
 
 const STORAGE_SIDENAV_COLLAPSED_KEY = 'APP/SIDENAV_COLLAPSED';
 
@@ -40,45 +38,21 @@ const initialState = {
   treeMenus,
   currentMenu: null,
   isLoginPending: false,
-  isLoggedIn: true,
-  user: { username: 'admin' },
+  isLoggedIn: false,
+  user: null,
   collapsed: getStorageSidenavCollapsed(),
   openedKeys: [],
   screenWidth: 0,
+  errmsg: null,
 };
 
-export const appActions = createActions({
-  LOGIN: user => user,
-  LOGIN_SUCCESS: user => user,
-  LOGOUT: payload => payload,
-  TOGGLE_SIDENAV: collapsed => collapsed,
-  UPDATE_OPENED_KEYS: openedKeys => openedKeys,
-  UPDATE_SCREEN_WIDTH: screenWidth => screenWidth,
-});
-
-const LoginAPI = user =>
-  Observable.of(user).delay(1000);
-
-export const appEpic = combineEpics(
-  action$ =>
-    action$.ofType('LOGIN')
-      .mergeMap(action => LoginAPI(action.payload)
-        .map(response => appActions.loginSuccess(response))),
-);
-
-export const appListen = (store) => {
-  Observable.fromEvent(window, 'resize')
-    .debounceTime(1000)
-    .mapTo(document.body.clientWidth)
-    .map(appActions.updateScreenWidth)
-    .subscribe(store.dispatch);
-};
-
-export default handleActions({
+export const appReducer = handleActions({
   LOGIN: state =>
     ({ ...state, isLoginPending: true }),
   LOGIN_SUCCESS: (state, { payload }) =>
     ({ ...state, user: payload, isLoggedIn: true, isLoginPending: false }),
+  LOGIN_ERROR: state =>
+    ({ ...state, isLoginPending: false }),
   LOGOUT: state =>
     ({ ...state, user: null, isLoggedIn: false }),
   TOGGLE_SIDENAV: (state, { payload }) =>
@@ -87,6 +61,10 @@ export default handleActions({
     ({ ...state, openedKeys: payload }),
   UPDATE_SCREEN_WIDTH: (state, { payload }) =>
     ({ ...state, screenWidth: payload }),
+  SHOW_ERROR: (state, { payload }) =>
+    ({ ...state, errmsg: payload }),
+  HIDE_ERROR: state =>
+    ({ ...state, errmsg: null }),
   [LOCATION_CHANGE]: (state, { payload }) => {
     const currentMenu = selectCurrentMenu(state.menus, payload.pathname);
     return ({ ...state, currentMenu });

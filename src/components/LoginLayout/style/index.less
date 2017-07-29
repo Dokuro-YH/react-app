@@ -6,16 +6,37 @@
   right: 0;
   bottom: 0;
   left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url("/img/bg-login.jpg");
 
-  .login-header {
-    padding: 32px;
+  .login {
+    &-wrap {
+      background: #fff;
+      width: 280px;
+      padding: 10px 32px 60px 32px;
+      border: @border-width-base @border-color-base @border-style-base;
+      border-radius: @border-radius-base;
+    }
+
+    &-header {
+      text-align: center;
+
+      img {
+        height: 120px;
+      }
+    }
+
+    &-error {
+      margin-bottom: 8px;
+    }
+
+    &-form {}
+
+    &-btn {
+      width: 100%;
+    }
   }
 
-  .login-form {
-    margin: auto;
-    width: 280px;
-    padding: 24px 32px 0;
-    border: @border-width-base @border-color-base @border-style-base;
-    border-radius: @border-radius-base;
-  }
 }

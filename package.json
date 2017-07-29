@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "antd": "^2.12.0",
+    "axios": "^0.16.2",
     "history": "^4.6.3",
     "lodash": "^4.17.4",
     "path-to-regexp": "^1.7.0",
@@ -97,12 +98,13 @@
       "^react-native$": "react-native-web"
     }
   },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:8081",
+      "pathRewrite": {
+        "^/api": ""
+      },
+      "ws": true
+    }
   }
 }
