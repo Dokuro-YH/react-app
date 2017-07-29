@@ -39,11 +39,11 @@ const initialState = {
   currentMenu: null,
   isLoginPending: false,
   isLoggedIn: false,
+  loginErrmsg: null,
   user: null,
   collapsed: getStorageSidenavCollapsed(),
   openedKeys: [],
   screenWidth: 0,
-  errmsg: null,
 };
 
 export const appReducer = handleActions({
@@ -51,8 +51,10 @@ export const appReducer = handleActions({
     ({ ...state, isLoginPending: true }),
   LOGIN_SUCCESS: (state, { payload }) =>
     ({ ...state, user: payload, isLoggedIn: true, isLoginPending: false }),
-  LOGIN_ERROR: state =>
-    ({ ...state, isLoginPending: false }),
+  LOGIN_ERROR: (state, { payload }) =>
+    ({ ...state, isLoginPending: false, loginErrmsg: payload }),
+  HIDE_LOGIN_ERROR: state =>
+    ({ ...state, loginErrmsg: null }),
   LOGOUT: state =>
     ({ ...state, user: null, isLoggedIn: false }),
   TOGGLE_SIDENAV: (state, { payload }) =>
@@ -61,10 +63,6 @@ export const appReducer = handleActions({
     ({ ...state, openedKeys: payload }),
   UPDATE_SCREEN_WIDTH: (state, { payload }) =>
     ({ ...state, screenWidth: payload }),
-  SHOW_ERROR: (state, { payload }) =>
-    ({ ...state, errmsg: payload }),
-  HIDE_ERROR: state =>
-    ({ ...state, errmsg: null }),
   [LOCATION_CHANGE]: (state, { payload }) => {
     const currentMenu = selectCurrentMenu(state.menus, payload.pathname);
     return ({ ...state, currentMenu });

@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, Button, Icon } from 'antd';
+import { Form, Input, Button, Icon, message } from 'antd';
 import './style';
 
 class Login extends Component {
-  static defaultProps = {
-    loginErrmsg: null,
-  }
   static propTypes = {
     isLoginPending: PropTypes.bool.isRequired,
     login: PropTypes.func.isRequired,
-    // loginErrmsg: PropTypes.string,
+    loginErrmsg: PropTypes.string,
+    hideLoginError: PropTypes.func.isRequired,
     form: PropTypes.object.isRequired,
+  }
+
+  componentDidUpdate(prevProps) {
+    const prevLoginErrmsg = prevProps.loginErrmsg;
+    const loginErrmsg = this.props.loginErrmsg;
+
+    if (loginErrmsg && loginErrmsg !== prevLoginErrmsg) {
+      message.error(loginErrmsg, 3, this.props.hideLoginError);
+    }
   }
 
   handlerSubmit = (event) => {

@@ -4,70 +4,28 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { message } from 'antd';
 import MainLayout from '../components/MainLayout';
 import LoginLayout from '../components/LoginLayout';
 import { appActions } from '../actions/app';
 
 class App extends Component {
-  static defaultProps = {
-    user: {},
-    children: null,
-  }
   static propTypes = {
-    children: PropTypes.element,
-    state: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
+    children: PropTypes.element.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
   }
 
-  componentDidUpdate(prevProps) {
-    const { errmsg } = this.props.state;
-    const { hideError } = this.props.actions;
-    const prevErrmsg = prevProps.state.errmsg;
+  renderMain = () => (
+    <MainLayout key="main" {...this.props} >
+      {this.props.children}
+    </MainLayout>
+  )
 
-    if (errmsg && prevErrmsg !== errmsg) {
-      message.error(errmsg, 3, hideError);
-    }
-  }
-
-  renderMain = () => {
-    const { state, actions } = this.props;
-
-    const mainLayoutProps = {
-      menus: state.menus,
-      currentMenu: state.currentMenu,
-      treeMenus: state.treeMenus,
-      user: state.user,
-      collapsed: state.collapsed,
-      openedKeys: state.openedKeys,
-      logout: actions.logout,
-      toggleSidenav: actions.toggleSidenav,
-      updateOpenedKeys: actions.updateOpenedKeys,
-    };
-
-    return (
-      <MainLayout key="main" {...mainLayoutProps} >
-        {this.props.children}
-      </MainLayout>
-    );
-  }
-
-  renderLogin = () => {
-    const { state, actions } = this.props;
-
-    const loginLayoutProps = {
-      isLoginPending: state.isLoginPending,
-      loginErrmsg: state.loginErrmsg,
-      login: actions.login,
-    };
-
-    return (
-      <LoginLayout key="login" {...loginLayoutProps} />
-    );
-  }
+  renderLogin = () => (
+    <LoginLayout key="login" {...this.props} />
+  )
 
   render() {
-    const { state } = this.props;
+    const { isLoggedIn } = this.props;
 
     return (
       <div id="app">
@@ -75,19 +33,15 @@ class App extends Component {
           component=""
           transitionName="fade"
         >
-          {state.isLoggedIn ? this.renderMain() : this.renderLogin()}
+          {isLoggedIn ? this.renderMain() : this.renderLogin()}
         </Animate>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  state: state.app,
-});
+const mapStateToProps = state => state.app;
 
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(appActions, dispatch),
-});
+const mapDispatchToProps = dispatch => (bindActionCreators(appActions, dispatch));
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

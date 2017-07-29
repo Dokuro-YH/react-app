@@ -8,5 +8,4 @@ export const appActions = createActions({
   TOGGLE_SIDENAV: collapsed => collapsed,
   UPDATE_OPENED_KEYS: openedKeys => openedKeys,
   UPDATE_SCREEN_WIDTH: screenWidth => screenWidth,
-  SHOW_ERROR: error => error,
-}, 'HIDE_ERROR');
+}, 'HIDE_LOGIN_ERROR');

@@ -7,7 +7,7 @@ const loginEpic = (action$, store, { WebAPI }) =>
     .concatMap(({ payload }) =>
       WebAPI.login(payload)
         .map(user => appActions.loginSuccess(user))
-        .catch(error => Observable.of(appActions.loginError(), appActions.showError(error))),
+        .catch(error => Observable.of(appActions.loginError(error))),
   );
 
 export const appEpic = combineEpics(

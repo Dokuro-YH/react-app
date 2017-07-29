@@ -6,10 +6,7 @@ import './style';
 
 class MainLayout extends Component {
   static propTypes = {
-    user: PropTypes.shape({
-      username: PropTypes.string.isRequired,
-      avatar: PropTypes.string,
-    }).isRequired,
+    user: PropTypes.object.isRequired,
     currentMenu: PropTypes.object.isRequired,
     menus: PropTypes.array.isRequired,
     treeMenus: PropTypes.array.isRequired,
