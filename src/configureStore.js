@@ -1,12 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import { createEpicMiddleware } from 'redux-observable';
-import { rootReducer } from '../reducers';
-import { rootEpic } from '../epics';
-import { rootListens } from '../listens';
-import * as WebAPI from '../webapi';
+import { rootReducer } from './reducers';
+import { rootEpic } from './epics';
+import { rootListens } from './listens';
+import * as WebAPI from './webapi';
 
-export function configureStore(history) {
+export default function configureStore(history) {
   const middleware = [
     routerMiddleware(history),
     createEpicMiddleware(rootEpic, {
