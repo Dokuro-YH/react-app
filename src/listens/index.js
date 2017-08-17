@@ -8,6 +8,6 @@ const combineListens = (...listens) => (...args) =>
     return args;
   }, args);
 
-export const rootListens = combineListens(
+export const rootListener = combineListens(
   appListen,
 );

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb, Avatar, Badge, Dropdown, Icon } from 'antd';
-import './style';
 
 class MainLayout extends Component {
   static propTypes = {
@@ -73,7 +72,6 @@ class MainLayout extends Component {
 
     return (
       <Menu
-        className="main-menu"
         theme="dark"
         mode="inline"
         selectedKeys={selectedKeys}
@@ -100,11 +98,11 @@ class MainLayout extends Component {
     const headerMenu = this.renderHanderMenu();
 
     return (
-      <Layout.Header className="main-header">
-        <span className="fill" />
+      <Layout.Header>
+        <span />
         <Dropdown overlay={headerMenu}>
           <Badge dot>
-            <Avatar className="main-header-avatar" src={user.avatar}>{user.name || user.username}</Avatar>
+            <Avatar src={user.avatar}>{user.name || user.username}</Avatar>
           </Badge>
         </Dropdown>
       </Layout.Header>
@@ -132,7 +130,7 @@ class MainLayout extends Component {
     const items = this.createBreadItems(breads.reverse());
 
     return (
-      <Breadcrumb className="main-breadcrumb">
+      <Breadcrumb>
         {items}
       </Breadcrumb>
     );
@@ -144,21 +142,20 @@ class MainLayout extends Component {
     const breadcrumb = this.renderBreadcrumb();
 
     return (
-      <Layout className="main-layout">
+      <Layout>
         <Layout.Sider
-          className="main-sider"
           collapsible
           collapsed={this.props.collapsed}
           onCollapse={this.props.toggleSidenav}
         >
-          <div className="logo" />
+          <div />
           {sideMenu}
         </Layout.Sider>
         <Layout>
           {header}
-          <Layout.Content className="main-container">
+          <Layout.Content>
             {breadcrumb}
-            <div className="main-content-wrapper">
+            <div>
               {this.props.children}
             </div>
           </Layout.Content>

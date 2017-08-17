@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Button, Icon, message } from 'antd';
-import './style';
 
 class Login extends Component {
   static propTypes = {
@@ -36,13 +35,12 @@ class Login extends Component {
     const { getFieldDecorator } = this.props.form;
 
     return (
-      <div id="login-container">
-        <div className="login-wrap">
-          <div className="login-header">
+      <div>
+        <div>
+          <div>
             <img src="https://t.alipayobjects.com/images/rmsweb/T1B9hfXcdvXXXXXXXX.svg" alt="LOGO" />
           </div>
-
-          <Form className="login-form" onSubmit={this.handlerSubmit} >
+          <Form onSubmit={this.handlerSubmit} >
             <Form.Item>
               {getFieldDecorator('username', {
                 initialValue: '',
@@ -63,7 +61,7 @@ class Login extends Component {
               )}
             </Form.Item>
             <Form.Item>
-              <Button loading={isLoginPending} type="primary" htmlType="submit" className="login-btn">登录</Button>
+              <Button loading={isLoginPending} type="primary" htmlType="submit">登录</Button>
             </Form.Item>
           </Form>
         </div>
