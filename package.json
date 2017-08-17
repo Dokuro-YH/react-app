@@ -17,7 +17,8 @@
     "react-router-dom": "^4.1.2",
     "react-router-redux": "next",
     "redux": "^3.7.0",
-    "redux-actions": "^2.2.1"
+    "redux-actions": "^2.2.1",
+    "redux-saga": "^0.15.6"
   },
   "devDependencies": {
     "autoprefixer": "7.1.0",

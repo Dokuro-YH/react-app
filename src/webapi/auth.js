@@ -5,7 +5,9 @@ export function getUser(token) {
     headers: {
       Authorization: `${token.token_type} ${token.access_token}`,
     },
-  });
+  })
+    .then(({ data }) => ({ user: data }))
+    .catch(({ response }) => ({ error: response }));
 }
 
 export function getToken({ username, password }) {
@@ -13,10 +15,7 @@ export function getToken({ username, password }) {
   const payload = 'grant_type=client_credentials';
   return request.post('/api/uaa/oauth/token', payload, {
     headers: { Authorization },
-  });
-}
-
-export function login(user) {
-  return getToken(user)
-    .mergeMap(getUser);
+  })
+    .then(({ data }) => ({ token: data }))
+    .catch(({ response }) => ({ error: response }));
 }

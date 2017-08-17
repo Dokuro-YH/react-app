@@ -1,4 +1,7 @@
-const menus = [{
+import pathToRegexp from 'path-to-regexp';
+import { arrayToTree } from '../utils/array';
+
+export const menus = [{
   id: 1,
   title: 'Dashboard',
   icon: 'desktop',
@@ -25,6 +28,9 @@ const menus = [{
   bpid: 1,
   title: 'Team 2',
   link: '/teams/2',
-}];
+}].map(m => ({
+  ...m,
+  regexp: m.link && pathToRegexp(m.link),
+}));
 
-export default menus;
+export const treeMenus = arrayToTree(menus);

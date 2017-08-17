@@ -1,17 +1,9 @@
 import { handleActions } from 'redux-actions';
 import { LOCATION_CHANGE } from 'react-router-redux';
-import pathToRegexp from 'path-to-regexp';
-import metaMenus from '../utils/menus';
-import { arrayToTree } from '../utils/array';
+import { appActions } from '../actions/app';
+import { menus, treeMenus } from '../utils/menus';
 
 const STORAGE_SIDENAV_COLLAPSED_KEY = 'APP/SIDENAV_COLLAPSED';
-
-const menus = metaMenus.map(m => ({
-  ...m,
-  regexp: m.link && pathToRegexp(m.link),
-}));
-
-const treeMenus = arrayToTree(menus);
 
 function selectCurrentMenu(regexpMenus, pathname) {
   const currentMenu = regexpMenus.find(m => m.regexp && m.regexp.exec(pathname));
@@ -39,7 +31,7 @@ const initialState = {
   currentMenu: null,
   isLoginPending: false,
   isLoggedIn: false,
-  loginErrmsg: null,
+  loginError: null,
   user: null,
   collapsed: getStorageSidenavCollapsed(),
   openedKeys: [],
@@ -47,21 +39,19 @@ const initialState = {
 };
 
 export const appReducer = handleActions({
-  LOGIN: state =>
+  [appActions.login]: state =>
     ({ ...state, isLoginPending: true }),
-  LOGIN_SUCCESS: (state, { payload }) =>
+  [appActions.loginSuccess]: (state, { payload }) =>
     ({ ...state, user: payload, isLoggedIn: true, isLoginPending: false }),
-  LOGIN_ERROR: (state, { payload }) =>
-    ({ ...state, isLoginPending: false, loginErrmsg: payload }),
-  HIDE_LOGIN_ERROR: state =>
-    ({ ...state, loginErrmsg: null }),
-  LOGOUT: state =>
+  [appActions.loginError]: (state, { payload }) =>
+    ({ ...state, isLoginPending: false, loginError: payload }),
+  [appActions.logout]: state =>
     ({ ...state, user: null, isLoggedIn: false }),
-  TOGGLE_SIDENAV: (state, { payload }) =>
+  [appActions.toggleSidenav]: (state, { payload }) =>
     ({ ...state, collapsed: storageSidenavCollapsed(payload) }),
-  UPDATE_OPENED_KEYS: (state, { payload }) =>
+  [appActions.updateOpenedKeys]: (state, { payload }) =>
     ({ ...state, openedKeys: payload }),
-  UPDATE_SCREEN_WIDTH: (state, { payload }) =>
+  [appActions.updateScreenWidth]: (state, { payload }) =>
     ({ ...state, screenWidth: payload }),
   [LOCATION_CHANGE]: (state, { payload }) => {
     const currentMenu = selectCurrentMenu(state.menus, payload.pathname);
