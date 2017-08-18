@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { pick } from 'ramda';
-import { appActions } from '../actions/app';
 
 import ScrollToTop from '../components/ScrollToTop';
+import ContentLoading from '../components/ContentLoading';
 import AsyncRoute from '../components/AsyncRoute';
 import MainHeader from '../components/MainHeader';
 import MainBreadcrumb from '../components/MainBreadcrumb';
 import MainSider from '../components/MainSider';
+
+import { appActions } from '../actions/app';
 
 const pickHeaderProps = pick([
   'collapsed',
@@ -58,9 +60,9 @@ class MainLayout extends Component {
           <ScrollToTop>
             <div className="main-content">
               <MainBreadcrumb {...breadProps} />
-              <AsyncRoute exact path="/" load={loadRoute('Dashboard')} />
-              <AsyncRoute path="/users" load={loadRoute('Users')} />
-              <AsyncRoute path="/teams" load={loadRoute('Teams')} />
+              <AsyncRoute exact path="/" loading={ContentLoading} load={loadRoute('Dashboard')} />
+              <AsyncRoute path="/users" loading={ContentLoading} load={loadRoute('Users')} />
+              <AsyncRoute path="/teams" loading={ContentLoading} load={loadRoute('Teams')} />
             </div>
           </ScrollToTop>
         </div>

@@ -4,11 +4,11 @@ import { dissoc } from 'ramda';
 
 class AsyncComponent extends Component {
   static defaultProps = {
-    loading: (<div key="loading">Loading...</div>),
+    loading: () => <div key="loading">Loading...</div>,
   }
   static propTypes = {
     load: PropTypes.func.isRequired,
-    loading: PropTypes.element,
+    loading: PropTypes.func,
   }
   state = { Comp: null }
 
@@ -21,9 +21,10 @@ class AsyncComponent extends Component {
 
   render() {
     const { Comp } = this.state;
+    const Loading = this.props.loading;
     const rest = dissoc(['load', 'loading'])(this.props);
 
-    return (Comp ? <Comp {...rest} /> : this.props.loading);
+    return (Comp ? <Comp {...rest} /> : <Loading />);
   }
 
 }
