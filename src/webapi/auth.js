@@ -6,8 +6,7 @@ export function getUser(token) {
       Authorization: `${token.token_type} ${token.access_token}`,
     },
   })
-    .then(({ data }) => ({ user: data }))
-    .catch(({ response }) => ({ error: response }));
+    .then(({ data }) => data);
 }
 
 export function getToken({ username, password }) {
@@ -16,6 +15,16 @@ export function getToken({ username, password }) {
   return request.post('/api/uaa/oauth/token', payload, {
     headers: { Authorization },
   })
-    .then(({ data }) => ({ token: data }))
-    .catch(({ response }) => ({ error: response }));
+    .then(({ data }) => data);
+}
+
+export function checkToken(token) {
+  const payload = `token=${token.access_token}`;
+  return request.post('/api/uaa/oauth/check_token', payload)
+    .then(({ data }) => data);
+}
+
+export function login(payload) {
+  return getToken(payload)
+    .then(getUser);
 }

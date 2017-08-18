@@ -2,30 +2,30 @@ import pathToRegexp from 'path-to-regexp';
 import { arrayToTree } from '../utils/array';
 
 export const menus = [{
-  id: 1,
+  id: 'dashboard',
   title: 'Dashboard',
   icon: 'desktop',
   link: '/',
 }, {
-  id: 2,
-  bpid: 1,
+  id: 'users',
+  bpid: 'dashboard',
   title: 'User',
   icon: 'user',
   link: '/users',
 }, {
-  id: 3,
+  id: 'team',
   title: 'Team',
   icon: 'team',
 }, {
-  id: 4,
-  pid: 3,
-  bpid: 1,
+  id: 'team1',
+  pid: 'team',
+  bpid: 'dashboard',
   title: 'Team 1',
   link: '/teams/1',
 }, {
-  id: 5,
-  pid: 3,
-  bpid: 1,
+  id: 'team2',
+  pid: 'team',
+  bpid: 'dashboard',
   title: 'Team 2',
   link: '/teams/2',
 }].map(m => ({

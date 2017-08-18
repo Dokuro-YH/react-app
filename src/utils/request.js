@@ -1,15 +1,13 @@
 import axios from 'axios';
 
-const options = {};
-
-if (process.env.NODE_ENV === 'production') {
-  options.baseURL = 'http://localhost:8080';
-} else {
-  options.baseURL = 'http://localhost:8080';
-}
-
-const request = axios.create(options);
+const request = axios.create({
+  baseURL: process.env.NODE_ENV === 'production'
+    ? 'http://localhost:8080' // production
+    : 'http://localhost:8080', // development
+});
 
 request.defaults.headers['X-Requested-With'] = 'XMLHttpRequest';
+
+request.interceptors.response.use(null, error => Promise.reject(error.message));
 
 export { request };

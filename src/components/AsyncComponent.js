@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { dissoc } from 'ramda';
 
 class AsyncComponent extends Component {
   static defaultProps = {
@@ -21,10 +21,11 @@ class AsyncComponent extends Component {
 
   render() {
     const { Comp } = this.state;
+    const rest = dissoc(['load', 'loading'])(this.props);
 
-    return (Comp ? <Comp {...this.props} /> : this.props.loading);
+    return (Comp ? <Comp {...rest} /> : this.props.loading);
   }
 
 }
 
-export default withRouter(AsyncComponent);
+export default AsyncComponent;

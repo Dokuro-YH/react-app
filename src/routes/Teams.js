@@ -9,11 +9,7 @@ const Team = ({ match }) => (
 );
 
 Team.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      teamId: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 class Teams extends Component {
@@ -25,7 +21,7 @@ class Teams extends Component {
   render() {
     const match = this.props.match;
     return (
-      <div>
+      <div className="content-inner">
         <h1>Component: Teams</h1>
         <ul>
           <li>

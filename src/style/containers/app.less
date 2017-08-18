@@ -1,0 +1,75 @@
+.main-layout {
+  position: relative;
+  background-color: @background-color-base;
+
+  .main-header {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    width: 100%;
+    background: #fff;
+    height: @header-height;
+    border-bottom: @border-base;
+    z-index: @header-zindex;
+
+    .trigger {
+      font-size: 18px;
+      padding: 0 16px;
+      cursor: pointer;
+      transition: @primary-transition;
+
+      &:hover {
+        color: @primary-color;
+      }
+    }
+  }
+
+  .main-container {
+    position: relative;
+    padding-top: @header-height;
+  }
+
+  .main-sider {
+    position: fixed;
+    width: @sider-width;
+    background: #fff;
+    height: 100%;
+    z-index: @sider-zindex;
+
+    .main-menu {
+      height: 100vh;
+    }
+  }
+
+  .main-content {
+    margin-left: @sider-width;
+    transition: @primary-transition;
+    padding: 0 16px;
+  }
+
+  .main-breadcrumb {
+    margin: 12px 0;
+
+    .anticon {
+      margin-right: 4px;
+    }
+  }
+
+  .content-inner {
+    background: #fff;
+    padding: 16px;
+    min-height: 360px;
+  }
+
+  .main-sider.ant-layout-sider-collapsed + .main-content {
+    margin-left: @sider-collapsed-width;
+  }
+}
+
+.ant-menu-inline-collapsed-tooltip {
+  a {
+    color: @tooltip-color;
+    text-decoration: none;
+  }
+}
