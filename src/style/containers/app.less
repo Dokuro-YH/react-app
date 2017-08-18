@@ -1,56 +1,82 @@
 .main-layout {
-  position: relative;
-  height: 100%;
-  background-color: @background-color-base;
-
-  .main-header {
+  .main-sider {
     position: fixed;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: @sider-width;
     background: #fff;
-    height: @header-height;
-    border-bottom: @border-base;
-    z-index: @header-zindex;
+    z-index: @sider-zindex;
 
-    .trigger {
-      font-size: 18px;
-      padding: 0 16px;
-      cursor: pointer;
-      transition: @primary-transition;
+    .main-menu {
+      height: 100vh;
+    }
 
-      &:hover {
-        color: @primary-color;
-      }
+    &-header {
+      padding: 24px;
     }
   }
 
   .main-container {
     position: relative;
     padding-top: @header-height;
+    margin-left: @sider-width;
+    transition: @primary-transition;
   }
 
-  .main-sider {
-    position: fixed;
-    width: @sider-width;
+  .main-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
     background: #fff;
-    height: 100%;
-    z-index: @sider-zindex;
+    height: @header-height;
+    border-bottom: @border-base;
+    z-index: @header-zindex;
 
-    .main-menu {
-      height: 100vh;
+    &-trigger {
+      font-size: 16px;
+      padding: 0 16px;
+      height: @header-height;
+      line-height: @header-height;
+      transition: @primary-transition;
+      cursor: pointer;
+
+      &:hover {
+        color: @primary-color;
+      }
+    }
+
+    &-avatar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: @header-height;
+      line-height: @header-height;
+      cursor: pointer;
+      padding-right: 16px;
+
+      color: @text-color;
+
+      &:hover {
+        color: @primary-color;
+      }
+    }
+
+    .user-avatar {
+      margin-right: 4px;
     }
   }
 
   .main-content {
-    margin-left: @sider-width;
     transition: @primary-transition;
     padding: 0 16px;
   }
 
   .main-breadcrumb {
-    margin: 12px 0;
+    padding: 12px 0;
 
     .anticon {
       margin-right: 4px;
@@ -71,7 +97,7 @@
     min-height: 360px;
   }
 
-  .main-sider.ant-layout-sider-collapsed + .main-content {
+  .main-sider.ant-layout-sider-collapsed + .main-container {
     margin-left: @sider-collapsed-width;
   }
 }

@@ -1,9 +1,16 @@
 #root,
 body,
 html {
-  margin: 0;
-  padding: 0;
   height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: @background-color-base;
+}
+
+.full-screen {
+  .full-screen();
 }
 
 .full-width {
@@ -16,4 +23,8 @@ html {
 
 .fill {
   flex: 1 1 auto;
+}
+
+.block {
+  display: block;
 }

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Menu, Avatar, Badge, Dropdown, Icon } from 'antd';
+import { Menu, Avatar, Dropdown, Icon } from 'antd';
 
 class MainHeader extends Component {
   static propTypes = {
     // state
     logout: PropTypes.func.isRequired,
     collapsed: PropTypes.bool.isRequired,
-    user: PropTypes.object,
+    user: PropTypes.object.isRequired,
 
     // action
     toggleSidenav: PropTypes.func,
@@ -40,16 +40,17 @@ class MainHeader extends Component {
     return (
       <div className="main-header">
         {toggleSidenav && <Icon
-          className="trigger"
+          className="main-header-trigger"
           type={collapsed ? 'menu-unfold' : 'menu-fold'}
           onClick={this.handleTriggerClick}
         />}
         <span className="fill" />
-        {user && <Dropdown overlay={this.renderHanderMenu()}>
-          <Badge dot>
-            <Avatar src={user.avatar}>{user.name || user.username}</Avatar>
-          </Badge>
-        </Dropdown>}
+        <Dropdown trigger={['click']} overlay={this.renderHanderMenu()}>
+          <a className="main-header-avatar">
+            <Avatar className="user-avatar" src={user.avatar}>{(user.name || user.username).toUpperCase()}</Avatar>
+            <span>{user.name || user.username}<Icon type="down" /></span>
+          </a>
+        </Dropdown>
       </div>
     );
   }

@@ -15,6 +15,7 @@ module.exports = {
     'import'
   ],
   rules: {
+    'no-unused-vars': [1],
     'no-bitwise': [0],
     'no-mixed-operators': [0],
     'import/prefer-default-export': [0],

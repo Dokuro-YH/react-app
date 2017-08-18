@@ -5,6 +5,74 @@ class Dashboard extends Component {
     return (
       <div className="content-inner">
         <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
+        <h1>Component: Dashboard</h1>
       </div>
     );
   }

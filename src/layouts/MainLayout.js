@@ -14,19 +14,20 @@ import MainSider from '../components/MainSider';
 
 import { appActions } from '../actions/app';
 
-const pickHeaderProps = pick([
-  'collapsed',
-  'user',
-  'logout',
-  'toggleSidenav',
-]);
-
 const pickSiderProps = pick([
+  'user',
   'collapsed',
   'openedKeys',
   'treeMenus',
   'currentMenu',
   'updateOpenedKeys',
+]);
+
+const pickHeaderProps = pick([
+  'user',
+  'collapsed',
+  'logout',
+  'toggleSidenav',
 ]);
 
 const pickBreadProps = pick([
@@ -38,25 +39,30 @@ const loadRoute = name => () => import(`../routes/${name}`);
 
 class MainLayout extends Component {
   static propTypes = {
+    loading: PropTypes.bool.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
   }
 
   render() {
-    const { isLoggedIn } = this.props;
+    const { loading, isLoggedIn } = this.props;
+
+    if (loading) {
+      return <div>加载中</div>;
+    }
 
     if (!isLoggedIn) {
       return <Redirect to="/login" />;
     }
 
-    const headerProps = pickHeaderProps(this.props);
     const siderProps = pickSiderProps(this.props);
+    const headerProps = pickHeaderProps(this.props);
     const breadProps = pickBreadProps(this.props);
 
     return (
       <div className="main-layout">
-        <MainHeader {...headerProps} />
+        <MainSider {...siderProps} />
         <div className="main-container">
-          <MainSider {...siderProps} />
+          <MainHeader {...headerProps} />
           <ScrollToTop>
             <div className="main-content">
               <MainBreadcrumb {...breadProps} />
