@@ -1,4 +1,4 @@
-import { take, put, call } from 'redux-saga/effects';
+import { all, take, put, call } from 'redux-saga/effects';
 import { appActions } from '../actions/app';
 import { WebApi } from '../webapi';
 import { tokenCache } from '../utils/token';
@@ -10,7 +10,7 @@ export function* watchLogout() {
   }
 }
 
-export function* loginFlow() {
+export function* watchLogin() {
   for (; ;) {
     const { payload } = yield take(appActions.login);
     try {
@@ -23,4 +23,11 @@ export function* loginFlow() {
       yield put(appActions.loginError(error));
     }
   }
+}
+
+export default function* loginFlow() {
+  yield all([
+    watchLogin(),
+    watchLogout(),
+  ]);
 }
